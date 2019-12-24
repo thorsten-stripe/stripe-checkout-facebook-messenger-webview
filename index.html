@@ -51,6 +51,10 @@
                 var displayError = document.getElementById("error-message");
                 displayError.textContent = result.error.message;
               }
+            })
+            .catch(function(error) {
+              var displayError = document.getElementById("error-message");
+              displayError.textContent = error.message;
             });
         } else {
           window.location.assign(
