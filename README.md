@@ -6,7 +6,7 @@ https://developers.facebook.com/docs/messenger-platform/webview/
 
 - Create Stripe Account:
 - Enable client-only checkout
-- Add `username.github.io` to domain whitelist in https://dashboard.stripe.com/account/checkout/settings
+- Add `username.github.io` (replace username with your github user name) and `www.messenger.com` (for the redirect URLs) to domain whitelist in https://dashboard.stripe.com/account/checkout/settings
 - Create a one-time or recurring product in the Stripe Dashboard: https://dashboard.stripe.com/products
   - After creation click the "Use with checkout" button and copy the sku (sku_xxx) or plan (plan_xxx) ID
 - Copy your publishable key from: https://dashboard.stripe.com/apikeys
