@@ -1,0 +1,23 @@
+curl -X POST -H "Content-Type: application/json" -d '{
+  "recipient":{
+    "id":"<PSID>"
+  },
+  "message":{
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":"Try the URL button!",
+        "buttons":[
+          {
+            "type":"web_url",
+            "messenger_extensions": true,
+            "url":"https://thorsten-stripe.github.io/stripe-checkout-facebook-messenger-webview/index.html?pk=pk_test_g1IRNyIPvlOyweLpzIBPsean006Im59BP4&plan=plan_GPucFgVZx8Sr87&qty=1",
+            "title":"Stripe Checkout Yo",
+            "webview_height_ratio": "full"
+          }
+        ]
+      }
+    }
+  }
+}' "https://graph.facebook.com/v2.6/me/messages?access_token=<PAGE_ACCESS_TOKEN>"
