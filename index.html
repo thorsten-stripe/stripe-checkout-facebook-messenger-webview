@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Stripe Checkout Demo</title>
+    <meta name="description" content="Stripe Checkout Demo" />
+    <meta name="author" content="Stripe" />
+  </head>
+
+  <body>
+    <!-- Load Stripe.js on your website. -->
+    <script src="https://js.stripe.com/v3"></script>
+    <div id="error-message"></div>
+
+    <script>
+      (function() {
+        var url = new URL(window.location.href);
+        var publicKey = url.searchParams.get("pk");
+        var sku = url.searchParams.get("sku");
+        var plan = url.searchParams.get("plan");
+        var quantity = url.searchParams.get("qty");
+
+        if (publicKey && quantity && (sku || plan)) {
+          var stripe = Stripe(publicKey);
+          var items = sku
+            ? [{ sku, quantity: parseInt(quantity) }]
+            : [{ plan, quantity: parseInt(quantity) }];
+
+          // When the customer clicks on the button, redirect
+          // them to Checkout.
+          stripe
+            .redirectToCheckout({
+              items,
+
+              // Do not rely on the redirect to the successUrl for fulfilling
+              // purchases, customers may not always reach the success_url after
+              // a successful payment.
+              // Instead use one of the strategies described in
+              // https://stripe.com/docs/payments/checkout/fulfillment
+              successUrl:
+                "https://www.messenger.com/closeWindow/?display_text=Sucess",
+              cancelUrl:
+                "https://www.messenger.com/closeWindow/?display_text=Canceled"
+            })
+            .then(function(result) {
+              if (result.error) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer.
+                var displayError = document.getElementById("error-message");
+                displayError.textContent = result.error.message;
+              }
+            });
+        } else {
+          window.location.assign(
+            "https://www.messenger.com/closeWindow/?display_text=Error"
+          );
+        }
+      })();
+    </script>
+  </body>
+</html>
